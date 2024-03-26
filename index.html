@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="style.css">
+    <title>Relógio e Cronometro</title>
+</head>
+
+<body>
+<nav class="navbar navbar-inverse">
+    <div class="container-fluid" >
+      <div class="navbar-header">
+        <a class="navbar-brand" style="color: white; font-size: 20px;" href="#">Clock and Chronometer</a>
+      </div>
+      <button class="btn navbar-btn">Toggle Clock</button>
+      <button class="btn navbar-btn">Toggle Format</button>
+      <button class="btn navbar-btn">Chronometer</button>
+    </div>
+  </nav>
+    
+    <div class="container">
+        <div id="clock">
+            <div class="datetime">
+                <div id="digital">
+                    <span id="hour-digital">00</span>
+                    <span>:</span>
+                    <span id="min-digital">00</span>
+                    <span>:</span>
+                    <span id="sec-digital">00</span>
+                    <span id="period">AM</span>
+                </div>
+            </div>
+            <div class="analog" id="analog"   style="display: none;" >
+                <div class="hour-analog"></div>
+                <div class="min-analog"></div>
+                <div class="sec-analog"></div>
+                <span style="transform: rotate(30deg);">1</span>
+                <span style="transform: rotate(60deg);">2</span>
+                <span style="transform: rotate(90deg);">3</span>
+                <span style="transform: rotate(120deg);">4</span>
+                <span style="transform: rotate(150deg);">5</span>
+                <span style="transform: rotate(180deg);">6</span>
+                <span style="transform: rotate(210deg);">7</span>
+                <span style="transform: rotate(240deg);">8</span>
+                <span style="transform: rotate(270deg);">9</span>
+                <span style="transform: rotate(300deg);">10</span>
+                <span style="transform: rotate(330deg);">11</span>
+                <span style="transform: rotate(0deg);">12</span>
+            </div>
+        </div>
+      
+
+    </div>
+    <script src="script.js"></script>
+</body>
+
+</html>
