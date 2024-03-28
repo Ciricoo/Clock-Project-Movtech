@@ -6,26 +6,26 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
     <link rel="stylesheet" href="style.css">
-    <link
-      rel="stylesheet"
-      href="https://unicons.iconscout.com/release/v4.0.8/css/line.css"
-    />
-    <title>Relógio e Cronometro</title>
+    <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.8/css/line.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+        integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <title>Clock and Stopwatch</title>
 </head>
 
 <body>
-<nav class="navbar navbar-inverse">
-    <div class="container-fluid" >
-      <div class="navbar-header">
-        <a class="navbar-brand" style="color: white; font-size: 20px;" href="#">Clock and Chronometer</a>
-      </div>
-      <button class="btn navbar-btn" id="botaodigital">Digital clock </button>
-      <button class="btn navbar-btn" id= "botaoanalog">Analog clock</button>
-      <button class="btn navbar-btn" >Chronometer</button>
-      
-    </div>
-  </nav>
-    
+    <nav class="navbar navbar-inverse">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <a class="navbar-brand" style="color: white; font-size: 20px;" href="#">Clock and Stopwatch</a>
+            </div>
+            <button class="btn navbar-btn" id="botaodigital">Digital clock </button>
+            <button class="btn navbar-btn" id="botaoanalog">Analog clock</button>
+            <button class="btn navbar-btn" id="botaostopwatch">Stopwatch</button>
+
+        </div>
+    </nav>
+
     <div class="container">
         <div id="clock">
             <div class="digital-clock" id="digital-clock" style="display: none;">
@@ -41,13 +41,13 @@
                     <span class="dots">:</span>
                     <span id="min-digital">00</span>
                     <div class="right-side">
-                    <span id="period">AM/PM</span>
-                    <span id="sec-digital">00</span>
+                        <span id="period">AM/PM</span>
+                        <span id="sec-digital">00</span>
+                    </div>
                 </div>
-                </div>
-                
+
             </div>
-            <div class="analog" id="analog-clock">
+            <div class="analog" id="analog-clock" style="display: none;">
                 <div class="hour-analog">
                     <div class="hr" id="hr"></div>
                 </div>
@@ -59,9 +59,29 @@
                 </div>
             </div>
         </div>
-      
+        <div id="stopwatch" >
+            <h2 id="timer">
+                00:00:00:00
+            </h2>
+            <div id="actions">
+                <button id="reset">
+                    <i class="fa-solid fa-rotate"></i>
+                </button>
+
+                <button id="power" action="start">
+                    <i class="fa-solid fa-play"></i>
+                </button>
+
+                <button id="mark">
+                    <i class="fa-solid fa-bookmark"></i>
+                </button>
+            </div>
+            <div id="marks-list">
+            </div>
+        </div>
 
     </div>
+
     <script src="script.js"></script>
 </body>
 

@@ -8,7 +8,6 @@
 }
 
 body{
-    height: 100vh;
     background: #10101E;
 }
 
@@ -23,7 +22,11 @@ body{
     background: #10101E;
     color: white;
     font-size: 600;
-    
+}
+
+.btn:hover{
+    color: #fff;
+    background: #10101E;
 }
 
 .container-fluid{
@@ -131,7 +134,7 @@ body{
     padding: 20px 45px;
     box-shadow: 0 5px 25px rgba(16, 16, 30 0.8);
     border-radius: 10px;
-    -webkit-box-reflect: below 1px linear-gradient(transparent, rgb(255, 255, 255, 0.3));
+    -webkit-box-reflect: below 1px linear-gradient(transparent, rgb(255, 255, 255, 0.5));
     display: flex;
     justify-content: center;
     align-items: center;
@@ -144,7 +147,6 @@ body{
     justify-content: center;
     align-items: center;
 }
-
 
 #hour-digital, #min-digital, .dots{
     display: flex;
@@ -285,4 +287,93 @@ body{
         font-size: 50px;
         margin: 0;
     }
+}
+
+/* Stopwatch */
+
+#stopwatch{
+    background: -webkit-linear-gradient(90deg, rgba(179, 21, 21, 0), red);
+    padding: 2rem;
+    border-radius: 8px;
+}
+
+#timer{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: -webkit-linear-gradient(90deg, rgba(179, 21, 21, 0), red);
+    height: 250px;
+    width: 250px;
+    border: 3px solid black;
+    border-radius: 100%;
+    font-weight: 600;
+    font-size: 30px;
+    color: #fff;
+    margin-bottom: 1.5rem;
+    padding: 4rem;
+}
+
+#actions{
+    display: flex;
+    gap: 0.5rem;
+}
+
+#actions button{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 40px;
+    padding: .5rem;
+    font-size: 1.3rem;
+    border-radius: 4px;
+    border: none;
+    background-color: #b8b0b0;
+    color: black;
+    cursor: pointer;
+}
+
+#actions button:hover{
+    background: -webkit-linear-gradient(90deg, rgba(179, 21, 21, 0), red);;
+}
+
+#marks-list{
+    display: flex;
+    flex-direction: column;
+    gap: 0.7rem;
+    color: #fff;
+}
+
+#marks-list p{
+    margin: 0;
+}
+
+#marks-list p:first-child{
+    margin-top: 1.5rem;
+}
+
+.fa-trash{
+    display: flex;
+    text-align: center;
+    justify-content: center;
+    margin-top: 5px;
+    width: 100%;
+    height: 5px;
+    padding: .5rem;
+    font-size: 1.3rem;
+    border-radius: 4px;
+    border: none;
+    color: rgb(255, 255, 255);
+    cursor: pointer;
+    margin-top: 8px;
+}
+
+.trash{
+    display: flex;
+    justify-content: space-between;
+}
+
+.botao-trash{
+    background-color: transparent;
+    border: none;
 }
