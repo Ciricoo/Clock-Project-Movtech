@@ -1,4 +1,3 @@
-
 //Digital Clock
 
 const hourDigital = document.querySelector('#hour-digital');
@@ -19,6 +18,8 @@ formatSwitchBtn.addEventListener("click", () => {
     else {
         formatSwitchBtn.setAttribute("data-format", "12");
     }
+
+    saveClockFormat(formatSwitchBtn.getAttribute('data-format'));
 });
 
 setInterval(() => {
@@ -43,6 +44,10 @@ setInterval(() => {
     secDigital.innerHTML = `${formatTime(dSec)}`;
 
 }, 1000);
+
+document.addEventListener('DOMContentLoaded', () => {
+    loadClockFormat();
+});
 
 function formatTime(time) {
     return time < 10 ? '0' + time : time;
@@ -77,7 +82,7 @@ setInterval(() => {
     hr.style.transform = `rotateZ(${hh + mm / 12}deg)`;
     mn.style.transform = `rotateZ(${mm}deg)`;
     sec.style.transform = `rotateZ(${ss}deg)`;
-}, 1000); 
+}, 1000);
 
 // Chronometer
 
@@ -87,30 +92,30 @@ let intervalId = 0;
 let timer = 0;
 let marks = [];
 
-function formatarTime  (time) {
-    const hours = Math.floor(time / 360000);
-    const minutes = Math.floor((time % 360000) / 6000);
-    const seconds = Math.floor((time % 6000) / 100);
-    const hundredths = time % 100;
+function formatarTime(time) {
+    const hours = Math.floor(time / 360000).toString().padStart(2, '0');
+    const minutes = Math.floor((time % 360000) / 6000).toString().padStart(2, '0');
+    const seconds = Math.floor((time % 6000) / 100).toString().padStart(2, '0');
+    const hundredths = (time % 100).toString().padStart(2, '0');
 
-    return `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}:${hundredths.toString().padStart(2, '0')}`;
+    return `${hours}:${minutes}:${seconds}:${hundredths}`;
 };
 
- function setTimer (time) {
+function setTimer(time) {
     timerEl.innerText = formatarTime(time);
 };
 
-function addMarkToList (markIndex, markTime) {
+function addMarkToList(markIndex, markTime) {
     const markItem = document.createElement('div');
-    markItem.classList.add('trash');
+    markItem.classList.add('tempos');
     markItem.innerHTML = `<p>Marca ${markIndex}: ${formatarTime(markTime)}</p>`;
-    
+
     const deleteButton = document.createElement('button');
     deleteButton.classList.add('botao-trash');
     deleteButton.innerHTML = '<i class="fa-solid fa-trash"></i>';
     deleteButton.addEventListener('click', () => {
-        marks.splice(markIndex - 1, 1); 
-        updateMarksList(); 
+        marks.splice(markIndex - 1, 1);
+        updateMarksList();
     });
 
     markItem.appendChild(deleteButton);
@@ -118,14 +123,14 @@ function addMarkToList (markIndex, markTime) {
 };
 
 
-function updateMarksList () {
-    marksList.innerHTML = ''; 
+function updateMarksList() {
+    marksList.innerHTML = '';
     marks.forEach((mark, index) => {
         addMarkToList(index + 1, mark);
     });
 };
 
-function toggleTimer () {
+function toggleTimer() {
     const button = document.getElementById('power');
     const action = button.getAttribute('action');
 
@@ -135,7 +140,7 @@ function toggleTimer () {
         intervalId = setInterval(() => {
             timer += 1;
             setTimer(timer);
-    }, 10);
+        }, 10);
         button.setAttribute('action', 'pause');
         button.innerHTML = '<i class="fa-solid fa-pause"></i>';
     } else if (action == 'pause') {
@@ -144,14 +149,12 @@ function toggleTimer () {
     }
 };
 
-function markTime () {
+function markTime() {
     marks.push(timer);
-    if(timer != 0){
     addMarkToList(marks.length, timer);
-    }
 };
 
-function resetTimer () {
+function resetTimer() {
     clearInterval(intervalId);
     timer = 0;
     setTimer(timer);
@@ -163,6 +166,12 @@ function resetTimer () {
 document.getElementById('power').addEventListener('click', toggleTimer);
 document.getElementById('mark').addEventListener('click', markTime);
 document.getElementById('reset').addEventListener('click', resetTimer);
+
+
+function saveTimerData() {
+    localStorage.setItem('timer', timer);
+    localStorage.setItem('marks', JSON.stringify(marks));
+}
 
 //  Changing watches and chronometer
 
@@ -191,4 +200,86 @@ stopwatchBtn.addEventListener('click', () => {
     stopwatch.style.display = 'block'
     analogClock.style.display = 'none';
     digitalClock.style.display = 'none';
+    
 });
+
+// Local Storage
+
+document.addEventListener("DOMContentLoaded", () => {
+    loadClockState();
+});
+
+// Function to save clock state to local storage
+function saveClockState(clockType) {
+    localStorage.setItem('clockType', clockType);
+}
+
+// Function to load clock state from local storage
+function loadClockState() {
+    const clockType = localStorage.getItem('clockType');
+    if (clockType === 'digital') {
+        showDigitalClock();
+    } else if (clockType === 'analog') {
+        showAnalogClock();
+    } else if (clockType === 'stopwatch') {
+        showStopwatch();
+    } else {
+        // Default behavior when no clock state is saved
+        showDigitalClock();
+    }
+}
+
+
+// Function to show digital clock
+function showDigitalClock() {
+    digitalClock.style.display = 'flex';
+    analogClock.style.display = 'none';
+    stopwatch.style.display = 'none';
+}
+
+// Function to show analog clock
+function showAnalogClock() {
+    analogClock.style.display = 'flex';
+    digitalClock.style.display = 'none';
+    stopwatch.style.display = 'none';
+}
+
+// Function to show stopwatch
+function showStopwatch() {
+    stopwatch.style.display = 'block';
+    analogClock.style.display = 'none';
+    digitalClock.style.display = 'none';
+}
+
+// Update clock state when buttons are clicked
+digitalClockBtn.addEventListener('click', () => {
+    saveClockState('digital');
+    showDigitalClock();
+});
+
+analogClockBtn.addEventListener('click', () => {
+    saveClockState('analog');
+    showAnalogClock();
+});
+
+stopwatchBtn.addEventListener('click', () => {
+    saveClockState('stopwatch');
+    showStopwatch();
+});
+
+
+// Função para salvar o formato do relógio digital no armazenamento local
+function saveClockFormat(formatValue) {
+    localStorage.setItem('clockFormat', formatValue);
+}
+
+// Função para carregar o formato do relógio digital do armazenamento local
+function loadClockFormat() {
+    const savedFormat = localStorage.getItem('clockFormat');
+    if (savedFormat) {
+        formatSwitchBtn.setAttribute('data-format', savedFormat);
+        if (savedFormat === '24') {
+            formatSwitchBtn.classList.add('active');
+        }
+    }
+}

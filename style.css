@@ -12,21 +12,10 @@ body{
 }
 
 .container{
-    min-height: 50vh;
+    min-height: 40vh;
     display: flex;
     align-items: center;
     justify-content: center;
-}
-
-.btn{
-    background: #10101E;
-    color: white;
-    font-size: 600;
-}
-
-.btn:hover{
-    color: #fff;
-    background: #10101E;
 }
 
 .container-fluid{
@@ -121,10 +110,7 @@ body{
     border-radius: 6px 6px 0 0;
 }
 
-
-
 /* Digital clock*/
-
 
 .digital-clock{
     position: relative;
@@ -282,13 +268,6 @@ body{
     transform: translateX(10px);
 }
 
-@media (max-width: 500px){
-    span{
-        font-size: 50px;
-        margin: 0;
-    }
-}
-
 /* Stopwatch */
 
 #stopwatch{
@@ -353,22 +332,11 @@ body{
 }
 
 .fa-trash{
-    display: flex;
-    text-align: center;
-    justify-content: center;
-    margin-top: 5px;
-    width: 100%;
-    height: 5px;
     padding: .5rem;
-    font-size: 1.3rem;
-    border-radius: 4px;
-    border: none;
-    color: rgb(255, 255, 255);
     cursor: pointer;
-    margin-top: 8px;
+    margin-top: 10px;
 }
-
-.trash{
+.tempos{
     display: flex;
     justify-content: space-between;
 }
