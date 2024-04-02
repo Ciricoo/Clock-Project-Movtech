@@ -22,6 +22,7 @@ body{
     background-color: #03152e94;
 }
 
+
 /* Analog clock*/
 
 .analog{
@@ -118,7 +119,6 @@ body{
     font-family: 'Segoe UI', sans-serif;
     width: 5-5px;
     padding: 20px 45px;
-    box-shadow: 0 5px 25px rgba(16, 16, 30 0.8);
     border-radius: 10px;
     -webkit-box-reflect: below 1px linear-gradient(transparent, rgb(255, 255, 255, 0.5));
     display: flex;
@@ -290,6 +290,7 @@ body{
     color: #fff;
     margin-bottom: 1.5rem;
     padding: 4rem;
+    box-shadow: 0 10px 35px rgba(16, 16, 30, 0.8);
 }
 
 #actions{
@@ -297,7 +298,8 @@ body{
     gap: 0.5rem;
 }
 
-#actions button{
+#actions button {
+    box-shadow: 0 5px 25px rgba(16, 16, 30, 0.8);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -311,6 +313,7 @@ body{
     color: black;
     cursor: pointer;
 }
+
 
 #actions button:hover{
     background: -webkit-linear-gradient(90deg, rgba(179, 21, 21, 0), red);;

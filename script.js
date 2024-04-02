@@ -2,7 +2,7 @@
 
 const hourDigital = document.querySelector('#hour-digital');
 const minDigital = document.querySelector('#min-digital');
-const periodDigital = document.querySelector('#period')
+const periodDigital = document.querySelector('#period');
 const secDigital = document.querySelector('#sec-digital');
 
 const formatSwitchBtn = document.querySelector(".format-switch-btn");
@@ -114,7 +114,11 @@ function addMarkToList(markIndex, markTime) {
     deleteButton.classList.add('botao-trash');
     deleteButton.innerHTML = '<i class="fa-solid fa-trash"></i>';
     deleteButton.addEventListener('click', () => {
-        marks.splice(markIndex - 1, 1);
+        let confirmation = confirm("Tem certeza que deseja excluir?")
+
+        if (confirmation) {
+            marks.splice(markIndex - 1, 1);
+        }
         updateMarksList();
     });
 
@@ -127,7 +131,14 @@ function updateMarksList() {
     marksList.innerHTML = '';
     marks.forEach((mark, index) => {
         addMarkToList(index + 1, mark);
+        saveTimerData();
     });
+
+    if (marks.length === 0) {
+        clearTimerData();
+    } else {
+        saveTimerData();
+    }
 };
 
 function toggleTimer() {
@@ -146,12 +157,16 @@ function toggleTimer() {
     } else if (action == 'pause') {
         button.setAttribute('action', 'continue');
         button.innerHTML = '<i class="fa-solid fa-play"></i>';
+        saveTimerData();
     }
 };
 
 function markTime() {
-    marks.push(timer);
-    addMarkToList(marks.length, timer);
+    if (timer != 0) {
+        marks.push(timer);
+        addMarkToList(marks.length, timer);
+        saveTimerData();
+    }
 };
 
 function resetTimer() {
@@ -161,6 +176,7 @@ function resetTimer() {
     const button = document.getElementById('power');
     button.setAttribute('action', 'start');
     button.innerHTML = '<i class="fa-solid fa-play"></i>';
+    saveTimerData();
 };
 
 document.getElementById('power').addEventListener('click', toggleTimer);
@@ -168,12 +184,7 @@ document.getElementById('mark').addEventListener('click', markTime);
 document.getElementById('reset').addEventListener('click', resetTimer);
 
 
-function saveTimerData() {
-    localStorage.setItem('timer', timer);
-    localStorage.setItem('marks', JSON.stringify(marks));
-}
-
-//  Changing watches and chronometer
+// Local Storage
 
 const digitalClockBtn = document.getElementById('botaodigital');
 const analogClockBtn = document.getElementById('botaoanalog');
@@ -183,38 +194,16 @@ const stopwatchBtn = document.querySelector('#botaostopwatch');
 const stopwatch = document.querySelector('#stopwatch');
 
 
-digitalClockBtn.addEventListener('click', () => {
-    digitalClock.style.display = 'flex';
-    analogClock.style.display = 'none';
-    stopwatch.style.display = 'none';
-});
-
-analogClockBtn.addEventListener('click', () => {
-    analogClock.style.display = 'flex';
-    digitalClock.style.display = 'none';
-    stopwatch.style.display = 'none';
-
-});
-
-stopwatchBtn.addEventListener('click', () => {
-    stopwatch.style.display = 'block'
-    analogClock.style.display = 'none';
-    digitalClock.style.display = 'none';
-    
-});
-
-// Local Storage
+// Saved Clock State
 
 document.addEventListener("DOMContentLoaded", () => {
     loadClockState();
 });
 
-// Function to save clock state to local storage
 function saveClockState(clockType) {
     localStorage.setItem('clockType', clockType);
 }
 
-// Function to load clock state from local storage
 function loadClockState() {
     const clockType = localStorage.getItem('clockType');
     if (clockType === 'digital') {
@@ -224,34 +213,28 @@ function loadClockState() {
     } else if (clockType === 'stopwatch') {
         showStopwatch();
     } else {
-        // Default behavior when no clock state is saved
         showDigitalClock();
     }
 }
 
-
-// Function to show digital clock
 function showDigitalClock() {
     digitalClock.style.display = 'flex';
     analogClock.style.display = 'none';
     stopwatch.style.display = 'none';
 }
 
-// Function to show analog clock
 function showAnalogClock() {
     analogClock.style.display = 'flex';
     digitalClock.style.display = 'none';
     stopwatch.style.display = 'none';
 }
 
-// Function to show stopwatch
 function showStopwatch() {
     stopwatch.style.display = 'block';
     analogClock.style.display = 'none';
     digitalClock.style.display = 'none';
 }
 
-// Update clock state when buttons are clicked
 digitalClockBtn.addEventListener('click', () => {
     saveClockState('digital');
     showDigitalClock();
@@ -267,13 +250,12 @@ stopwatchBtn.addEventListener('click', () => {
     showStopwatch();
 });
 
+// Saved Clock Format
 
-// Função para salvar o formato do relógio digital no armazenamento local
 function saveClockFormat(formatValue) {
     localStorage.setItem('clockFormat', formatValue);
 }
 
-// Função para carregar o formato do relógio digital do armazenamento local
 function loadClockFormat() {
     const savedFormat = localStorage.getItem('clockFormat');
     if (savedFormat) {
@@ -283,3 +265,35 @@ function loadClockFormat() {
         }
     }
 }
+
+// Saved Time and Marks
+
+function saveTimerData() {
+    localStorage.setItem('timer', timer);
+    localStorage.setItem('marks', JSON.stringify(marks));
+}
+
+function loadTimerData() {
+    const savedTimer = localStorage.getItem('timer');
+    const savedMarks = localStorage.getItem('marks');
+
+    if (savedTimer) {
+        timer = parseFloat(savedTimer);
+        setTimer(timer);
+    }
+
+    if (savedMarks) {
+        marks = JSON.parse(savedMarks);
+        updateMarksList();
+    }
+}
+
+function clearTimerData() {
+    localStorage.removeItem('marks');
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+    loadClockFormat();
+    loadClockState();
+    loadTimerData();
+})
