@@ -12,7 +12,7 @@ formatSwitchBtn.addEventListener("click", () => {
 
     var formatValue = formatSwitchBtn.getAttribute("data-format");
 
-    if (formatValue === "12") {
+    if (formatValue == "12") {
         formatSwitchBtn.setAttribute("data-format", "24");
     }
     else {
@@ -34,7 +34,7 @@ setInterval(() => {
     }
 
     var formatValue = formatSwitchBtn.getAttribute("data-format");
-    if (formatValue === "12") {
+    if (formatValue == "12") {
         dHour = dHour > 12 ? dHour % 12 : dHour;
     }
 
@@ -45,9 +45,6 @@ setInterval(() => {
 
 }, 1000);
 
-document.addEventListener('DOMContentLoaded', () => {
-    loadClockFormat();
-});
 
 function formatTime(time) {
     return time < 10 ? '0' + time : time;
@@ -79,7 +76,9 @@ setInterval(() => {
     let mm = day.getMinutes() * deg;
     let ss = day.getSeconds() * deg;
 
-    hr.style.transform = `rotateZ(${hh + mm / 12}deg)`;
+    hr.style.transform = `rotateZ(${hh + mm / 12}deg)`; // Representa a fração adicional da rotação baseada nos minutos. Como o ponteiro das horas não se move abruptamente de hora em hora, 
+    //mas sim de forma gradual à medida que os minutos avançam, mm / 12 adiciona uma pequena quantidade de rotação extra ao ponteiro das horas com base nos minutos atuais. 
+    //Dividir os minutos por 12 é uma convenção comum para obter essa fração da rotação. Por exemplo, quando os minutos são 30 (meia hora), isso adiciona um ângulo de rotação de 15 graus (30/12) ao ponteiro das horas.
     mn.style.transform = `rotateZ(${mm}deg)`;
     sec.style.transform = `rotateZ(${ss}deg)`;
 }, 1000);
@@ -115,7 +114,6 @@ function addMarkToList(markIndex, markTime) {
     deleteButton.innerHTML = '<i class="fa-solid fa-trash"></i>';
     deleteButton.addEventListener('click', () => {
         let confirmation = confirm("Tem certeza que deseja excluir?")
-
         if (confirmation) {
             marks.splice(markIndex - 1, 1);
         }
@@ -134,7 +132,7 @@ function updateMarksList() {
         saveTimerData();
     });
 
-    if (marks.length === 0) {
+    if (marks.length == 0) {
         clearTimerData();
     } else {
         saveTimerData();
@@ -196,9 +194,6 @@ const stopwatch = document.querySelector('#stopwatch');
 
 // Saved Clock State
 
-document.addEventListener("DOMContentLoaded", () => {
-    loadClockState();
-});
 
 function saveClockState(clockType) {
     localStorage.setItem('clockType', clockType);
@@ -206,11 +201,11 @@ function saveClockState(clockType) {
 
 function loadClockState() {
     const clockType = localStorage.getItem('clockType');
-    if (clockType === 'digital') {
+    if (clockType == 'digital') {
         showDigitalClock();
-    } else if (clockType === 'analog') {
+    } else if (clockType == 'analog') {
         showAnalogClock();
-    } else if (clockType === 'stopwatch') {
+    } else if (clockType == 'stopwatch') {
         showStopwatch();
     } else {
         showDigitalClock();
@@ -260,7 +255,7 @@ function loadClockFormat() {
     const savedFormat = localStorage.getItem('clockFormat');
     if (savedFormat) {
         formatSwitchBtn.setAttribute('data-format', savedFormat);
-        if (savedFormat === '24') {
+        if (savedFormat == '24') {
             formatSwitchBtn.classList.add('active');
         }
     }
@@ -278,7 +273,7 @@ function loadTimerData() {
     const savedMarks = localStorage.getItem('marks');
 
     if (savedTimer) {
-        timer = parseFloat(savedTimer);
+        timer = parseInt(savedTimer);
         setTimer(timer);
     }
 
