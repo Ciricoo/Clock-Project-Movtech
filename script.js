@@ -114,6 +114,7 @@ function addMarkToList(markIndex, markTime) {
         let confirmation = confirm("Tem certeza que deseja excluir?")
         if (confirmation) {
             marks.splice(markIndex - 1, 1);
+            saveTimerData(); 
         }
         updateMarksList();
     });
@@ -129,12 +130,6 @@ function updateMarksList() {
         addMarkToList(index + 1, mark);
         saveTimerData();
     });
-
-    if (marks.length == 0) {
-        clearTimerData();
-    } else {
-        saveTimerData();
-    }
 };
 
 function toggleTimer() {
@@ -142,6 +137,7 @@ function toggleTimer() {
     const action = button.getAttribute('action');
 
     clearInterval(intervalId);
+    
 
     if (action == 'start' || action == 'continue') {
         intervalId = setInterval(() => {
@@ -199,9 +195,7 @@ function saveClockState(clockType) {
 
 function loadClockState() {
     const clockType = localStorage.getItem('clockType');
-    if (clockType == 'digital') {
-        showDigitalClock();
-    } else if (clockType == 'analog') {
+    if (clockType == 'analog') {
         showAnalogClock();
     } else if (clockType == 'stopwatch') {
         showStopwatch();
@@ -279,10 +273,6 @@ function loadTimerData() {
         marks = JSON.parse(savedMarks);
         updateMarksList();
     }
-}
-
-function clearTimerData() {
-    localStorage.removeItem('marks');
 }
 
 document.addEventListener('DOMContentLoaded', () => {
